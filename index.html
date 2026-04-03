@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Toastid Tech \u2014 YouTube Agency Strategy</title>
+<title>Toastid Tech — YouTube Agency Strategy</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a1628">
+<link rel="apple-touch-icon" href="logo-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -30,7 +33,6 @@
     overflow-x: hidden;
   }
 
-  /* Background texture */
   body::before {
     content: '';
     position: fixed;
@@ -44,7 +46,6 @@
 
   .container { max-width: 960px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
 
-  /* HEADER */
   header {
     border-bottom: 1px solid rgba(201,168,76,0.2);
     padding: 28px 0 20px;
@@ -59,7 +60,6 @@
     gap: 12px;
   }
 
-  .logo-block {}
   .logo-eyebrow {
     font-family: 'DM Mono', monospace;
     font-size: 10px;
@@ -79,9 +79,7 @@
 
   h1 span { color: var(--gold); }
 
-  .header-meta {
-    text-align: right;
-  }
+  .header-meta { text-align: right; }
 
   .badge {
     display: inline-block;
@@ -96,12 +94,8 @@
     margin-bottom: 6px;
   }
 
-  .header-meta p {
-    font-size: 12px;
-    color: var(--muted);
-  }
+  .header-meta p { font-size: 12px; color: var(--muted); }
 
-  /* PHASE TABS */
   .tabs {
     display: flex;
     gap: 4px;
@@ -121,25 +115,21 @@
     text-transform: uppercase;
     color: var(--muted);
     cursor: pointer;
+    border: none;
     border-bottom: 2px solid transparent;
     white-space: nowrap;
     transition: color 0.2s, border-color 0.2s;
     background: none;
-    border-top: none;
-    border-left: none;
-    border-right: none;
   }
 
   .tab:hover { color: var(--gold-light); }
   .tab.active { color: var(--gold); border-bottom-color: var(--gold); }
 
-  /* PANELS */
   .panel { display: none; animation: fadeIn 0.3s ease; }
   .panel.active { display: block; }
 
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* SECTION TITLES */
   .section-title {
     font-family: 'Playfair Display', serif;
     font-size: 20px;
@@ -155,7 +145,6 @@
     line-height: 1.5;
   }
 
-  /* CARDS */
   .card {
     background: var(--navy-mid);
     border: 1px solid rgba(201,168,76,0.12);
@@ -183,40 +172,25 @@
     margin-bottom: 8px;
   }
 
-  .card h3 {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--white);
-    margin-bottom: 6px;
-  }
-
-  .card p, .card li {
-    font-size: 13px;
-    color: #aab8cc;
-    line-height: 1.65;
-  }
-
+  .card h3 { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 6px; }
+  .card p, .card li { font-size: 13px; color: #aab8cc; line-height: 1.65; }
   .card ul { padding-left: 16px; margin-top: 6px; }
   .card li { margin-bottom: 4px; }
 
-  /* GRID */
   .grid-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
     margin-bottom: 16px;
   }
-
   @media (max-width: 580px) { .grid-2 { grid-template-columns: 1fr; } }
 
-  /* PILLAR BLOCKS */
   .pillars {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 12px;
     margin-bottom: 20px;
   }
-
   @media (max-width: 600px) { .pillars { grid-template-columns: 1fr; } }
 
   .pillar {
@@ -227,25 +201,10 @@
     text-align: center;
   }
 
-  .pillar-icon {
-    font-size: 24px;
-    margin-bottom: 8px;
-  }
+  .pillar-icon { font-size: 24px; margin-bottom: 8px; }
+  .pillar h4 { font-size: 13px; font-weight: 600; color: var(--gold-light); margin-bottom: 4px; }
+  .pillar p { font-size: 11px; color: var(--muted); line-height: 1.5; }
 
-  .pillar h4 {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--gold-light);
-    margin-bottom: 4px;
-  }
-
-  .pillar p {
-    font-size: 11px;
-    color: var(--muted);
-    line-height: 1.5;
-  }
-
-  /* CALENDAR */
   .week-block {
     background: var(--navy-mid);
     border: 1px solid rgba(201,168,76,0.1);
@@ -276,9 +235,867 @@
     min-width: 60px;
   }
 
-  .week-title {
-    font-size: 13px;
+  .week-title { font-size: 13px; font-weight: 600; color: var(--white); flex: 1; }
+
+  .week-chevron {
+    font-size: 10px;
+    color: var(--muted);
+    transition: transform 0.2s;
+  }
+
+  .week-block.open .week-chevron { transform: rotate(180deg); }
+
+  .week-body {
+    display: none;
+    padding: 14px 16px;
+  }
+
+  .week-block.open .week-body { display: block; }
+
+  .day-row {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .day-row:last-child { border-bottom: none; }
+
+  .day-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gold-dim);
+    min-width: 28px;
+    padding-top: 2px;
+    text-transform: uppercase;
+  }
+
+  .day-task { font-size: 12px; color: #aab8cc; line-height: 1.5; }
+  .day-task strong { color: var(--white); }
+
+  .tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 2px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  .tag-shorts { background: rgba(224,90,90,0.2); color: var(--red); }
+  .tag-long { background: rgba(74,144,217,0.2); color: var(--accent); }
+  .tag-community { background: rgba(90,184,138,0.2); color: var(--green); }
+  .tag-seo { background: rgba(201,168,76,0.2); color: var(--gold); }
+
+  .metric-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .metric-row:last-child { border-bottom: none; }
+
+  .metric-label { font-size: 13px; color: #aab8cc; }
+
+  .metric-value {
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    color: var(--gold-light);
+    font-weight: 500;
+  }
+
+  .metric-note { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .progress-bar {
+    height: 4px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 2px;
+    margin-top: 6px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+    border-radius: 2px;
+    transition: width 1s ease;
+  }
+
+  .phase-timeline {
+    display: flex;
+    gap: 0;
+    margin-bottom: 24px;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .phase-block {
+    flex: 1;
+    padding: 14px 12px;
+    background: var(--navy-mid);
+    border-right: 1px solid rgba(201,168,76,0.1);
+    text-align: center;
+    position: relative;
+  }
+
+  .phase-block:last-child { border-right: none; }
+
+  .phase-block.current {
+    background: var(--navy-light);
+  }
+
+  .phase-block.current::after {
+    content: '▼';
+    position: absolute;
+    bottom: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--gold);
+    font-size: 10px;
+  }
+
+  .phase-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--gold-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .phase-name {
+    font-size: 11px;
     font-weight: 600;
     color: var(--white);
-    flex: 1;
+    line-height: 1.3;
   }
+
+  .phase-period {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 13px;
+    color: #aab8cc;
+  }
+
+  .checklist-item:last-child { border-bottom: none; }
+
+  .check-icon {
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--gold-dim);
+    border-radius: 2px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: var(--gold);
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 500px) { .stat-grid { grid-template-columns: 1fr 1fr; } }
+
+  .stat-card {
+    background: var(--navy-mid);
+    border: 1px solid rgba(201,168,76,0.12);
+    border-radius: 6px;
+    padding: 14px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .stat-label { font-size: 11px; color: var(--muted); }
+
+  footer {
+    border-top: 1px solid rgba(201,168,76,0.1);
+    padding: 24px 0;
+    margin-top: 48px;
+    text-align: center;
+  }
+
+  footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gold-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="header-inner">
+      <div class="logo-block">
+        <div class="logo-eyebrow">Toastid Tech LLC</div>
+        <h1>YouTube <span>Agency</span> Strategy</h1>
+      </div>
+      <div class="header-meta">
+        <div class="badge">90-Day Playbook</div>
+        <p>Consulting · Content · Growth</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('overview')">Overview</button>
+    <button class="tab" onclick="switchTab('content')">Content Pillars</button>
+    <button class="tab" onclick="switchTab('calendar')">90-Day Calendar</button>
+    <button class="tab" onclick="switchTab('metrics')">KPIs & Metrics</button>
+    <button class="tab" onclick="switchTab('setup')">Channel Setup</button>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div class="panel active" id="panel-overview">
+    <div class="section-title">The Opportunity</div>
+    <p class="section-sub">YouTube is the highest-leverage distribution channel for AI consulting — long-form authority content, discoverable forever, converts to clients on autopilot.</p>
+
+    <div class="phase-timeline">
+      <div class="phase-block current">
+        <div class="phase-num">Phase 01</div>
+        <div class="phase-name">Foundation</div>
+        <div class="phase-period">Days 1–30</div>
+      </div>
+      <div class="phase-block">
+        <div class="phase-num">Phase 02</div>
+        <div class="phase-name">Momentum</div>
+        <div class="phase-period">Days 31–60</div>
+      </div>
+      <div class="phase-block">
+        <div class="phase-num">Phase 03</div>
+        <div class="phase-name">Authority</div>
+        <div class="phase-period">Days 61–90</div>
+      </div>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-num">3×</div>
+        <div class="stat-label">Videos / Week</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">90</div>
+        <div class="stat-label">Day Sprint</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">$0</div>
+        <div class="stat-label">Ad Spend</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Core Thesis</div>
+      <h3>Toastid Tech as the Solo Founder AI Channel</h3>
+      <p>Position as the go-to YouTube resource for small business owners and solo founders learning to implement AI tools — practical, no-fluff, built by someone who actually ships products. Showcase the real PWAs, real consulting wins, real process.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-label">Target Audience</div>
+        <h3>Who You're Speaking To</h3>
+        <ul>
+          <li>Solo founders & micro-agencies</li>
+          <li>IT managers exploring AI automation</li>
+          <li>Non-technical business owners</li>
+          <li>Freelancers wanting to add AI services</li>
+          <li>Wellness / app entrepreneurs</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-label">Revenue Paths</div>
+        <h3>How YouTube Converts</h3>
+        <ul>
+          <li>Consulting retainer inquiries</li>
+          <li>PWA / product sales (Cope, Tai Chi)</li>
+          <li>Gumroad digital product links</li>
+          <li>YouTube Partner Program (monetization)</li>
+          <li>Sponsorships from AI tool companies</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT PILLARS -->
+  <div class="panel" id="panel-content">
+    <div class="section-title">Content Pillars</div>
+    <p class="section-sub">Three core content pillars keep your channel focused while covering enough ground to attract diverse search traffic.</p>
+
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-icon">🤖</div>
+        <h4>AI Tools & Tutorials</h4>
+        <p>Hands-on walkthroughs of tools like Claude, ChatGPT, Zapier, Make, and no-code AI builders</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">🏗️</div>
+        <h4>Build in Public</h4>
+        <p>Behind-the-scenes of building Cope, Tai Chi PWA, Content Wizard — real code, real decisions</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">💼</div>
+        <h4>AI Consulting Strategy</h4>
+        <p>How to sell AI services, find clients, price retainers, and run a solo AI consulting shop</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Video Format Mix</div>
+      <h3>Long-Form + Shorts Strategy</h3>
+      <p>Long-form (8–20 min) builds authority and drives search traffic. Shorts (under 60 sec) drive subscriber growth and reach new audiences. Run both simultaneously from Day 1.</p>
+      <ul style="margin-top: 10px;">
+        <li><strong>Long-form:</strong> 1× per week — tutorials, build-alongs, strategy breakdowns</li>
+        <li><strong>Shorts:</strong> 2× per week — quick tips, AI hacks, product demos, behind-the-scenes</li>
+        <li><strong>Community posts:</strong> 2–3× per week — polls, announcements, resource drops</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Top Video Ideas — Launch Queue</div>
+      <h3>First 12 Videos to Film</h3>
+      <ul>
+        <li>🎬 <strong>"I Built 4 AI Apps in 30 Days — Here's What Happened"</strong> (Build in Public)</li>
+        <li>🎬 <strong>"Claude vs ChatGPT for Solo Founders — Real Comparison"</strong> (AI Tools)</li>
+        <li>🎬 <strong>"How to Build a PWA with No Framework in 2025"</strong> (Tutorial)</li>
+        <li>🎬 <strong>"My $0 AI Marketing Stack for Small Business"</strong> (Strategy)</li>
+        <li>🎬 <strong>"I Launched a Wellness App — What the Numbers Look Like"</strong> (Build in Public)</li>
+        <li>🎬 <strong>"How to Prompt Claude for Business Documents"</strong> (AI Tools)</li>
+        <li>🎬 <strong>"The Toastid Tech Consulting Offer — How I Price AI Services"</strong> (Consulting)</li>
+        <li>🎬 <strong>"EmailJS + GitHub Pages: Free Contact Forms for Devs"</strong> (Tutorial)</li>
+        <li>🎬 <strong>"Cope App: Building a Mental Wellness PWA from Scratch"</strong> (Build in Public)</li>
+        <li>🎬 <strong>"LinkedIn Outreach for AI Consultants — My Exact Script"</strong> (Strategy)</li>
+        <li>🎬 <strong>"How I Use Claude to Write All My Marketing Copy"</strong> (AI Tools)</li>
+        <li>🎬 <strong>"Solo Founder Revenue Streams: AI Consulting + Digital Products"</strong> (Strategy)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 90-DAY CALENDAR -->
+  <div class="panel" id="panel-calendar">
+    <div class="section-title">90-Day Content Calendar</div>
+    <p class="section-sub">Tap each week to expand. Cadence is 1 long-form + 2 Shorts per week. Community posts fill the gaps.</p>
+
+    <!-- PHASE 1 -->
+    <div class="card-label" style="margin-bottom:10px; margin-top:4px;">Phase 01 — Foundation (Weeks 1–4)</div>
+
+    <div class="week-block open">
+      <button class="week-header" onclick="toggleWeek(this)">
+        <span class="week-num">Week 1</span>
+        <span class="week-title">Channel Launch & Credibility Drop</span>
+        <span class="week-chevron">▼</span>
+      </button>
+      <div class="week-body">
+        <div class="day-row">
+          <span class="day-label">Mon</span>
+          <span class="day-task"><strong>Long-form:</strong> "I Built 4 AI Apps in 30 Days" — channel trailer / authority video <span class="tag tag-long">Long</span></span>
+        </div>
+        <div class="day-row">
+          <span class="day-label">Wed</span>
+          <span class="day-task"><strong>Short:</strong> 30-sec Cope app demo — "I made a mental wellness app with AI" <span class="tag tag-shorts">Short</span></span>
+        </div>
+        <div class="day-row">
+          <span class="day-label">Fri</span>
+          <span class="day-task"><strong>Short:</strong> "3 things Claude does better than ChatGPT for founders" <span class="tag tag-shorts">Short</span></span>
+        </div>
+        <div class="day-row">
+          <span class="day-label">Daily</span>
+          <span class="day-task">Community post: Channel intro poll — "What's your biggest AI challenge?" <span class="tag tag-community">Community</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-block">
+      <button class="week-header" onclick="toggleWeek(this)">
+        <span class="week-num">Week 2</span>
+        <span class="week-title">Tutorial Authority — PWA Build</span>
+        <span class="week-chevron">▼</span>
+      </button>
+      <div class="week-body">
+        <div class="day-row">
+          <span class="day-label">Mon</span>
+          <span class="day-task"><strong>Long-form:</strong> "Build a PWA with No Framework — Full Walkthrough" <span class="tag tag-long">Long</span></span>
+        </div>
+        <div class="day-row">
+          <span class="day-label">Wed</span>
+          <span class="day-task"><strong>Short:</strong> "What is a PWA and why should small businesses use one?" <span class="tag tag-shorts">Short</span></span>
+        </div>
+        <div class="day-row">
+          <span class="day-label">Fri</span>
+          <span class="day-task"><strong>Short:</strong> GitHub Pages hosting in 60 seconds <span class="tag tag-shorts">Short</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-block">
+      <button class="week-header" onclick="toggleWeek(this)">
+        <span class="week-num">Week 3</span>
+        <span class="week-title">AI Tools Comparison — Drives Search</span>
+        <span class="week-chevron">▼</span>
+      </button>
+      <div class="week-body">
+        <div class="day-row">
+          <span class="day-label">Mon</span>
+          <span class="day-task"><strong>Long-form:</strong> "Claude vs ChatGPT for Solo Founders — Real Comparison" <span class="tag tag-long">Long</span></span>
+        </div>
+        <div class="day-row">
+          <span class="day-label">Wed</span>
+          <span class="day-task"><strong>Short:</strong> "My favorite Claude prompt for writing marketing copy" <span class="tag tag-shorts">Short</span></span>
+        </div>
+        <div class="day-row">
+          <span class="day-label">Fri</span>
+          <span class="day-task"><strong>Short:</strong> "AI tool I use every single day as a solo founder" <span class="tag tag-shorts">Short</span></span>
+        </div>
+        <div class="day-row">
+          <span class="day-label">SEO</span>
+          <span class="day-task">Target keyword: "claude vs chatgpt for business" — optimize title, description, tags <span class="tag tag-seo">SEO</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-block">
+      <button class="week-header" onclick="toggleWeek(this)">
+        <span class="week-num">Week 4</span>
+        <span class="week-title">Build in Public — Cope Story</span>
+        <span class="week-chevron">▼</span>
+      </button>
+      <div class="week-body">
+        <div class="day-row">
+          <span class="day-label">Mon</span>
+          <span class="day-task"><strong>Long-form:</strong> "I Launched a Mental Wellness App — Here's What the Numbers Look Like" <span class="tag tag-long">Long</span></span>
+        </div>
+        <div class="day-row">
+          <span class="day-label">Wed</span>
+          <span class="day-task"><strong>Short:</strong> Cope app walkthrough — features demo under 60 sec <span class="tag tag-shorts">Short</span></span>
+        </div>
+        <div class="day-row">
+          <span class="day-label">Fri</span>
+          <span class="day-task"><strong>Short:</strong> "How I use YOUARELOVED as a marketing hook" — promo storytelling <span class="tag tag-shorts">Short</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE 2 -->
+    <div class="card-label" style="margin-bottom:10px; margin-top:20px;">Phase 02 — Momentum (Weeks 5–8)</div>
+
+    <div class="week-block">
+      <button class="week-header" onclick="toggleWeek(this)">
+        <span class="week-num">Week 5</span>
+        <span class="week-title">Consulting Offer — Monetization Signal</span>
+        <span class="week-chevron">▼</span>
+      </button>
+      <div class="week-body">
+        <div class="day-row">
+          <span class="day-label">Mon</span>
+          <span class="day-task"><strong>Long-form:</strong> "How I Price AI Consulting Services as a Solo Founder" <span class="tag tag-long">Long</span></span>
+        </div>
+        <div class="day-row">
+          <span class="day-label">Wed</span>
+          <span class="day-task"><strong>Short:</strong> "What clients actually ask for when they hire an AI consultant" <span class="tag tag-shorts">Short</span></span>
+        </div>
+        <div class="day-row">
+          <span class="day-label">Fri</span>
+          <span class="day-task"><strong>Short:</strong> "My LinkedIn outreach script for AI consulting leads" <span class="tag tag-shorts">Short</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-block">
+      <button class="week-header" onclick="toggleWeek(this)">
+        <span class="week-num">Week 6</span>
+        <span class="week-title">Deep Tutorial — EmailJS + Formspree</span>
+        <span class="week-chevron">▼</span>
+      </button>
+      <div class="week-body">
+        <div class="day-row">
+          <span class="day-label">Mon</span>
+          <span class="day-task"><strong>Long-form:</strong> "Free Contact Forms for Static Sites — EmailJS + Formspree Setup" <span class="tag tag-long">Long</span></span>
+        </div>
+        <div class="day-row">
+          <span class="day-label">Wed</span>
+          <span class="day-task"><strong>Short:</strong> "No backend contact form in 2 minutes" <span class="tag tag-shorts">Short</span></span>
+        </div>
+        <div class="day-row">
+          <span class="day-label">Fri</span>
+          <span class="day-task"><strong>Short:</strong> "GitHub Pages + Square payments — sell with no server" <span class="tag tag-shorts">Short</span></span>
+        </div>
+        <div class="day-row">
+          <span class="day-label">SEO</span>
+          <span class="day-task">Target: "emailjs tutorial", "free contact form github pages" <span class="tag tag-seo">SEO</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-block">
+      <button class="week-header" onclick="toggleWeek(this)">
+        <span class="week-num">Week 7</span>
+        <span class="week-title">Marketing AI Clone — Product Showcase</span>
+        <span class="week-chevron">▼</span>
+      </button>
+      <div class="week-body">
+        <div class="day-row">
+          <span class="day-label">Mon</span>
+          <span class="day-task"><strong>Long-form:</strong> "I Built an AI Marketing Clone of Myself — Here's How It Works" <span class="tag tag-long">Long</span></span>
+        </div>
+        <div class="day-row">
+          <span class="day-label">Wed</span>
+          <span class="day-task"><strong>Short:</strong> "AI that writes in YOUR voice — demo" <span class="tag tag-shorts">Short</span></span>
+        </div>
+        <div class="day-row">
+          <span class="day-label">Fri</span>
+          <span class="day-task"><strong>Short:</strong> "How I use Claude to 10x my content output weekly" <span class="tag tag-shorts">Short</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-block">
+      <button class="week-header" onclick="toggleWeek(this)">
+        <span class="week-num">Week 8</span>
+        <span class="week-title">Review & Double Down on Top Performer</span>
+        <span class="week-chevron">▼</span>
+      </button>
+      <div class="week-body">
+        <div class="day-row">
+          <span class="day-label">Mon</span>
+          <span class="day-task"><strong>Long-form:</strong> Deep-dive sequel to your best-performing Week 1–7 video <span class="tag tag-long">Long</span></span>
+        </div>
+        <div class="day-row">
+          <span class="day-label">Wed</span>
+          <span class="day-task"><strong>Short:</strong> Repurpose top-comment question from best video as a Short <span class="tag tag-shorts">Short</span></span>
+        </div>
+        <div class="day-row">
+          <span class="day-label">Fri</span>
+          <span class="day-task"><strong>Short:</strong> "30-day channel update — what worked, what flopped" <span class="tag tag-shorts">Short</span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE 3 -->
+    <div class="card-label" style="margin-bottom:10px; margin-top:20px;">Phase 03 — Authority (Weeks 9–13)</div>
+
+    <div class="week-block">
+      <button class="week-header" onclick="toggleWeek(this)">
+        <span class="week-num">Wk 9–10</span>
+        <span class="week-title">Collab Outreach + Guest Expert Videos</span>
+        <span class="week-chevron">▼</span>
+      </button>
+      <div class="week-body">
+        <div class="day-row">
+          <span class="day-label">Focus</span>
+          <span class="day-task">Reach out to 5 complementary creators (no-code, productivity, solopreneur channels) for collabs or cross-promotions. Film 1 interview-style long-form.</span>
+        </div>
+        <div class="day-row">
+          <span class="day-label">Video</span>
+          <span class="day-task"><strong>Long-form:</strong> "AI Tools That Changed My Consulting Business in 90 Days" <span class="tag tag-long">Long</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-block">
+      <button class="week-header" onclick="toggleWeek(this)">
+        <span class="week-num">Wk 11–12</span>
+        <span class="week-title">SEO Surge — High Search Volume Topics</span>
+        <span class="week-chevron">▼</span>
+      </button>
+      <div class="week-body">
+        <div class="day-row">
+          <span class="day-label">Focus</span>
+          <span class="day-task">Use TubeBuddy or VidIQ to find high-volume, low-competition keywords in your niche. Create 2 SEO-optimized long-form videos targeting those exact queries.</span>
+        </div>
+        <div class="day-row">
+          <span class="day-label">Ideas</span>
+          <span class="day-task">"Best AI tools for small business 2025" · "How to start AI consulting with no clients" · "Claude API tutorial for beginners" <span class="tag tag-seo">SEO</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-block">
+      <button class="week-header" onclick="toggleWeek(this)">
+        <span class="week-num">Week 13</span>
+        <span class="week-title">90-Day Recap + Next Chapter Tease</span>
+        <span class="week-chevron">▼</span>
+      </button>
+      <div class="week-body">
+        <div class="day-row">
+          <span class="day-label">Mon</span>
+          <span class="day-task"><strong>Long-form:</strong> "90 Days on YouTube as an AI Consultant — Full Breakdown" <span class="tag tag-long">Long</span></span>
+        </div>
+        <div class="day-row">
+          <span class="day-label">Wed</span>
+          <span class="day-task"><strong>Short:</strong> Subscriber milestone celebration + call to action <span class="tag tag-shorts">Short</span></span>
+        </div>
+        <div class="day-row">
+          <span class="day-label">Fri</span>
+          <span class="day-task"><strong>Short:</strong> Tease next 90-day series — what's coming for Toastid Tech <span class="tag tag-shorts">Short</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- METRICS -->
+  <div class="panel" id="panel-metrics">
+    <div class="section-title">KPIs & Success Metrics</div>
+    <p class="section-sub">Track these weekly. Growth is non-linear — expect slow Week 1–4, compounding from Week 6+.</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-label">90-Day Subscriber Targets</div>
+        <div class="metric-row">
+          <span class="metric-label">End of Phase 1 (Day 30)</span>
+          <span class="metric-value">100–250</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width: 15%"></div></div>
+        <div class="metric-row" style="margin-top:10px;">
+          <span class="metric-label">End of Phase 2 (Day 60)</span>
+          <span class="metric-value">500–1,000</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width: 40%"></div></div>
+        <div class="metric-row" style="margin-top:10px;">
+          <span class="metric-label">End of Phase 3 (Day 90)</span>
+          <span class="metric-value">1,500–3,000</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width: 75%"></div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Watch Time & Engagement</div>
+        <div class="metric-row">
+          <span class="metric-label">Avg. View Duration (Long)</span>
+          <span class="metric-value">&gt; 40%</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Shorts Completion Rate</span>
+          <span class="metric-value">&gt; 70%</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">CTR (Click-Through Rate)</span>
+          <span class="metric-value">4–8%</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Like / View Ratio</span>
+          <span class="metric-value">&gt; 3%</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-label">Comment Rate</span>
+          <span class="metric-value">&gt; 0.5%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Business Conversion Metrics</div>
+      <h3>What Actually Matters for Revenue</h3>
+      <div class="metric-row">
+        <div>
+          <div class="metric-label">Consulting inquiry emails / month</div>
+          <div class="metric-note">From YouTube description CTA</div>
+        </div>
+        <span class="metric-value">3–5+</span>
+      </div>
+      <div class="metric-row">
+        <div>
+          <div class="metric-label">Cope / PWA sales from YouTube traffic</div>
+          <div class="metric-note">Track via Gumroad referrer or Square</div>
+        </div>
+        <span class="metric-value">10–20/mo</span>
+      </div>
+      <div class="metric-row">
+        <div>
+          <div class="metric-label">Link clicks from description</div>
+          <div class="metric-note">toastidtech.com, Gumroad, Square</div>
+        </div>
+        <span class="metric-value">Track weekly</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Weekly Review Checklist</div>
+      <div class="checklist-item">
+        <div class="check-icon">✓</div>
+        <span>Check YouTube Studio analytics — impressions, CTR, AVD for each video</span>
+      </div>
+      <div class="checklist-item">
+        <div class="check-icon">✓</div>
+        <span>Note which video has highest CTR — study thumbnail and title formula</span>
+      </div>
+      <div class="checklist-item">
+        <div class="check-icon">✓</div>
+        <span>Reply to every comment in first 24 hours (boosts algorithmic ranking)</span>
+      </div>
+      <div class="checklist-item">
+        <div class="check-icon">✓</div>
+        <span>Cross-post Shorts to TikTok and Facebook Reels same day</span>
+      </div>
+      <div class="checklist-item">
+        <div class="check-icon">✓</div>
+        <span>Pin best comment on each video to seed conversation</span>
+      </div>
+      <div class="checklist-item">
+        <div class="check-icon">✓</div>
+        <span>Update description links if any product or promo codes change</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SETUP -->
+  <div class="panel" id="panel-setup">
+    <div class="section-title">Channel Setup Checklist</div>
+    <p class="section-sub">Get these done before publishing Video 1. A polished channel converts browsers into subscribers.</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-label">Branding & Visual Identity</div>
+        <div class="checklist-item">
+          <div class="check-icon">✓</div>
+          <span>Channel banner — navy + gold, Toastid Tech logo, tagline</span>
+        </div>
+        <div class="checklist-item">
+          <div class="check-icon">✓</div>
+          <span>Profile picture — logo-512.png or professional photo</span>
+        </div>
+        <div class="checklist-item">
+          <div class="check-icon">✓</div>
+          <span>Thumbnail template — consistent Playfair Display + navy/gold</span>
+        </div>
+        <div class="checklist-item">
+          <div class="check-icon">✓</div>
+          <span>Channel trailer video (60–90 sec) filmed and uploaded</span>
+        </div>
+        <div class="checklist-item">
+          <div class="check-icon">✓</div>
+          <span>Intro / outro card (5-sec branded animation or static)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-label">Channel Settings</div>
+        <div class="checklist-item">
+          <div class="check-icon">✓</div>
+          <span>Channel handle set: @ToastidTechLLC</span>
+        </div>
+        <div class="checklist-item">
+          <div class="check-icon">✓</div>
+          <span>About section written — what you do, who it's for, links</span>
+        </div>
+        <div class="checklist-item">
+          <div class="check-icon">✓</div>
+          <span>Links added: toastidtech.com, Gumroad, Square, @ToastidTechLLC</span>
+        </div>
+        <div class="checklist-item">
+          <div class="check-icon">✓</div>
+          <span>Default upload settings — category, license, comments on</span>
+        </div>
+        <div class="checklist-item">
+          <div class="check-icon">✓</div>
+          <span>Monetization application filed (or noted for 1K milestone)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Description Template — Use on Every Video</div>
+      <h3>Standard Video Description Structure</h3>
+      <pre style="font-family:'DM Mono',monospace; font-size:11px; color:#aab8cc; line-height:1.7; white-space:pre-wrap; margin-top:10px;">[Hook sentence — restate the video's core value promise]
+
+In this video:
+→ [Point 1]
+→ [Point 2]
+→ [Point 3]
+
+🔗 TRY COPE (wellness app): https://toastidtech.github.io/Cope
+🔗 HIRE ME for AI consulting: https://toastidtech.com
+🔗 GET THE TOOLS: https://gumroad.com/[your-link]
+
+Use code YOUARELOVED for Cope · TST2026 for all other products
+
+📲 Follow @ToastidTechLLC
+—————————————————————
+#AIConsulting #SoloFounder #ToastidTech #AITools #PWA #BuildInPublic</pre>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Recommended Tools</div>
+      <div class="metric-row">
+        <span class="metric-label">Thumbnail creation</span>
+        <span class="metric-value" style="font-size:12px;">Canva (free)</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">SEO research</span>
+        <span class="metric-value" style="font-size:12px;">TubeBuddy / VidIQ</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">Screen recording</span>
+        <span class="metric-value" style="font-size:12px;">OBS Studio (free)</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">Captions / subtitles</span>
+        <span class="metric-value" style="font-size:12px;">YouTube auto-captions + edit</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">Analytics</span>
+        <span class="metric-value" style="font-size:12px;">YouTube Studio</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">Scheduling</span>
+        <span class="metric-value" style="font-size:12px;">YouTube native scheduler</span>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Toastid Tech LLC &nbsp;·&nbsp; YouTube Agency Strategy &nbsp;·&nbsp; @ToastidTechLLC</p>
+  </footer>
+
+</div>
+
+<script>
+  function switchTab(name) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    event.target.classList.add('active');
+    document.getElementById('panel-' + name).classList.add('active');
+  }
+
+  function toggleWeek(btn) {
+    const block = btn.closest('.week-block');
+    block.classList.toggle('open');
+  }
+
+  // Register service worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/YouTube-Marketing/sw.js')
+        .catch(err => console.warn('SW registration failed:', err));
+    });
+  }
+</script>
+</body>
+</html>
